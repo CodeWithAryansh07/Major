@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(
+                                        "/api/auth/register",
+                                        "/api/auth/login",
                                         "/api/auth/**",
                                         "/api/execute",
                                         "/api/execute/**", 
@@ -46,7 +48,7 @@ public class SecurityConfig {
                                         "/api/comments/snippet/**",
                                         "/api/comments/*/replies"
                                 ).permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/snippets/*").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/snippets/**").permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )

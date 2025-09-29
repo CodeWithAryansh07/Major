@@ -35,7 +35,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         
-        if (request.getServletPath().contains("/api/auth")) {
+        final String servletPath = request.getServletPath();
+        
+        // Skip JWT processing for public endpoints
+        if (servletPath.startsWith("/api/auth") ||
+            servletPath.startsWith("/api/execute") ||
+            servletPath.equals("/api/health") ||
+            servletPath.startsWith("/api/snippets/public") ||
+            servletPath.startsWith("/api/snippets/search") ||
+            (servletPath.startsWith("/api/snippets/") && "GET".equals(request.getMethod()) && 
+             !servletPath.startsWith("/api/snippets/my") && !servletPath.startsWith("/api/snippets/starred"))) {
             filterChain.doFilter(request, response);
             return;
         }
