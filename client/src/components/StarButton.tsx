@@ -1,0 +1,46 @@
+import { Star } from "lucide-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+function StarButton({ snippetId }: { snippetId: string }) {
+    // Mock state - will be replaced with backend integration
+    const [isStarred, setIsStarred] = useState(false);
+    const [starCount, setStarCount] = useState(Math.floor(Math.random() * 10) + 1);
+
+    const handleStar = async () => {
+        // Simulate API call
+        try {
+            if (isStarred) {
+                setIsStarred(false);
+                setStarCount(prev => prev - 1);
+                toast.success("Removed from favorites");
+            } else {
+                setIsStarred(true);
+                setStarCount(prev => prev + 1);
+                toast.success("Added to favorites");
+            }
+        } catch (error) {
+            toast.error("Failed to update favorite");
+        }
+    };
+
+    return (
+        <button
+            className={`group flex items-center gap-1.5 px-3 py-1.5 rounded-lg 
+    transition-all duration-200 ${isStarred
+                    ? "bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20"
+                    : "bg-gray-500/10 text-gray-400 hover:bg-gray-500/20"
+                }`}
+            onClick={handleStar}
+        >
+            <Star
+                className={`w-4 h-4 ${isStarred ? "fill-yellow-500" : "fill-none group-hover:fill-gray-400"}`}
+            />
+            <span className={`text-xs font-medium ${isStarred ? "text-yellow-500" : "text-gray-400"}`}>
+                {starCount}
+            </span>
+        </button>
+    );
+}
+
+export default StarButton;
