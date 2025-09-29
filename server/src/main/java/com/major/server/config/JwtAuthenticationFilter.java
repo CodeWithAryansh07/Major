@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             servletPath.startsWith("/api/snippets/public") ||
             servletPath.startsWith("/api/snippets/search") ||
             (servletPath.startsWith("/api/snippets/") && "GET".equals(request.getMethod()) && 
-             !servletPath.startsWith("/api/snippets/my") && !servletPath.startsWith("/api/snippets/starred"))) {
+             !servletPath.equals("/api/snippets/my") && !servletPath.equals("/api/snippets/starred"))) {
             filterChain.doFilter(request, response);
             return;
         }

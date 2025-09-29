@@ -48,7 +48,8 @@ public class SecurityConfig {
                                         "/api/comments/snippet/**",
                                         "/api/comments/*/replies"
                                 ).permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/snippets/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/snippets/*").permitAll()
+                                .requestMatchers("/api/snippets/my", "/api/snippets/starred").authenticated()
                                 .anyRequest()
                                 .authenticated()
                 )
